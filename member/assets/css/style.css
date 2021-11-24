@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins: 200,300,400,500,600,700,800,900&display=swap');
+
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+.popupbx
+{
+	margin: -9.5cm 0 0 -7.7cm;
+}
+
+.popup
+{
+	width: 300px;
+	background-color: whitesmoke;
+	border-radius: 20px;
+	text-align: center;
+	transform: translateX(3.7cm);
+	transition: 0.5s;
+}
+
+.popup2
+{
+	color: red;
+}
+
+
+header
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+    background: white;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 70px;
+	z-index: 10;
+	transition: 0.4s;
+	box-shadow: 25px 25px 30px rgba(0,0,0,0.05);
+}
+
+
+header.sticky
+{
+	padding: 5px 100px;
+	background: #fff;
+	border-bottom: 1px solid rgba(0,0,0,.1); /*rgba-> header line*/
+}
+
+header .logo
+{
+	position: relative;
+	font-weight: 700;
+	color: #1ea2bd;
+	text-decoration: none;
+	font-size: 2em;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	transition: 2.5s /* Unix 0.6s*/
+}
+
+.form_search
+{
+	margin-left: -40px;
+}
+
+header ul
+{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 0 0 25px;
+}
+
+header ul li
+{
+	position: relative;
+	list-style: none;	/*delete li dot*/
+}
+
+header ul li a
+{
+	position: relative;
+	margin: 0 15px;
+	text-decoration: none;
+	color: #1ea2bd;
+	letter-spacing: 2px;
+	font-weight: 300;
+	transition: 1.6s; /*menu 0.6s*/
+}
+
+header.sticky .logo,
+header.sticky ul li a
+{
+	color: #000; /*logo & menu hitam*/
+}
+
+.search
+{
+	height: 60px;
+	width: 100%;
+	background-color: transparent;
+	margin-left: 50px;
+}
+
+.search input
+{
+	width: calc(100% - 90px);
+	padding: 10px 15px;
+	margin-right: 10px;
+	font-size: 1.3rem;
+	background-color: transparent;
+	outline: none;
+	border: none;
+	border-bottom: 2px solid #1ea2bd;
+	color: #1ea2bd;
+}
+
+.search button
+{
+	/*padding: 10px 15px;*/
+	width: 70px;
+	height: 30px;
+	background-color: transparent;
+	border: 2px scroll #1ea2bd;
+	transition: 2s;
+	border-color: #1ea2bd;
+	color: #1ea2bd;
+}
