@@ -8,8 +8,10 @@ if (!isset($_SESSION['id_register'])){
 }
 
 $show_Allpostingan_following = showPostinganFollowing($_SESSION['id_register']); 
-
-
+$id_register = $_SESSION['id_register'];
+$sql = "SELECT * FROM view_profil WHERE id_register = $id_register";
+$stm = $conn->query($sql);
+$result = $stm->Fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -26,11 +28,34 @@ $show_Allpostingan_following = showPostinganFollowing($_SESSION['id_register']);
 <body>
 	<?php include 'navbar.php' ?>
 
-    
     <?php foreach($show_Allpostingan_following AS $postingFollowing){
-            echo '<img src="data:image/jpeg;base64,'.base64_encode( $postingFollowing["gambar"] ).'" alt="foto">';
-            echo $postingFollowing['pesan'];
-            echo $postingFollowing['tanggal'];
+            echo '
+                <div class="center">
+                    <div class="border">
+                        <div class="posting">    
+                            <img src="data:image/jpeg;base64,'.base64_encode( $postingFollowing["gambar"] ).'" alt="foto">
+                            <br>';
+
+                            echo '
+                                <div class="containerbx">
+                                    <div class="username_posting">'.
+                                        $result['username'].'
+                                    </div>
+
+                                    <div class="tgl">'.
+                                        $postingFollowing['tanggal'].'
+                                    </div>
+                                </div>';
+
+                            echo '
+                                <div class="pesan">'.   
+                                    $postingFollowing['pesan'].'
+                                </div>
+                        </div>
+                        <div class="line"></div>
+                    </div>
+                </div>';
+           
         }   
     ?>
     

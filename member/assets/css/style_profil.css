@@ -73,6 +73,22 @@ body
     z-index: 1;
 }
 
+.containerbx
+{
+	display: flex;
+}
+
+.username_posting
+{
+	font-weight: bold;
+    font-size: 14px;
+}
+
+.tgl
+{
+	margin: 0 0 0 20px;
+}
+
 .formbx
 {
     display: relative;

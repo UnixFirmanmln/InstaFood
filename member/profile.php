@@ -94,16 +94,25 @@ $jml_following = showCountFollowing($id_register);
                 echo '
                     <div class="posting">
                         <img src="data:image/jpeg;base64,'.base64_encode( $posting["gambar"] ).'" alt="Status">
-                    ';
-            ?> <br>
-            <?php 
-                echo $result['username'].' &nbsp;&nbsp;&nbsp;'.$posting['tanggal'];
-                echo 
-                        '<div class="pesan">
-                            '.$posting['pesan'].
-                        '</div>'.
-                    '</div>' ?>
-            <div class="line"></div>
+                        <br>';
+             
+                        echo '
+                        <div class="containerbx">
+                            <div class="username_posting">'.
+                                $result['username'].'
+                            </div>
+                            
+                            <div class="tgl">'.
+                                $posting['tanggal'].'
+                            </div>
+                        </div>';
+                
+                        echo '
+                        <div class="pesan">'.
+                            $posting['pesan'].'
+                        </div>
+                    </div>'; ?>
+                <div class="line"></div>
             <?php endforeach ?>
          
         </div>

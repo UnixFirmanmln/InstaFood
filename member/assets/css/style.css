@@ -28,6 +28,10 @@
 	color: red;
 }
 
+body
+{
+	background: #7efff5;
+}
 
 header
 {
@@ -133,4 +137,65 @@ header.sticky ul li a
 	transition: 2s;
 	border-color: #1ea2bd;
 	color: #1ea2bd;
+}
+
+/* Tampilan Postingan Following(yang diikuti) */
+.center
+{
+  	position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    min-height: 250px;
+    margin: 40px 0 0 200px;
+  	background: white;
+  	border-radius: 20px;
+  	box-shadow: 25px 25px 30px rgba(0,0,0,0.05);
+}
+
+.border
+{
+    flex-direction: column;
+    background: whitesmoke;
+    border-radius: 15px;
+}
+
+.posting
+{
+    margin: 2cm 0 1cm 1cm;
+}
+
+.posting img
+{
+    border-radius: 20px;
+    max-width: 20cm;
+    max-height: 10cm;
+}
+
+.containerbx
+{
+	display: flex;
+}
+
+.username_posting
+{
+	font-weight: bold;
+}
+
+.tgl
+{
+	margin: 0 0 0 20px;
+}
+
+.pesan
+{
+    font-size: 18px;
+}
+
+.line
+{
+    min-height: 1cm;
+    background: white;
+    width: 100%;
 }
