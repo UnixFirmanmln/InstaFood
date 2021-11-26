@@ -1,9 +1,8 @@
 <?php  
 session_start();
 include '../koneksi.php';
-$sql = "SELECT * FROM register";
-$stm = $conn->prepare($sql);
-$stm->execute();
+include '../function/function.php';
+
 
 if (isset($_POST['submit'])) {
     $nama_lengkap = $_POST['nama_lengkap'];
@@ -44,35 +43,11 @@ if (isset($_POST['submit'])) {
 
         if ($valid) {
 
-            $sql_insert = "INSERT INTO register VALUES(NULL, :nama_lengkap, :umur, :jns_kel, :alamat, :email, :username, SHA2(:password, 0), 'member')";
-            $stm2 = $conn->prepare($sql_insert);
-            $stm2->bindValue(':nama_lengkap', $_POST['nama_lengkap']);
-            $stm2->bindValue(':umur', $_POST['umur']);
-            $stm2->bindValue(':jns_kel', $_POST['jns_kel']);
-            $stm2->bindValue(':alamat', $_POST['alamat']);
-            $stm2->bindValue(':email', $_POST['email']);
-            $stm2->bindValue(':username', $_POST['username']);
-            $stm2->bindValue(':password', $_POST['password']);
+            registerMember();
 
-            if($stm2->execute()){
-                $_SESSION['msg'] = "Data berhasil disimpan";
-            } else {
-                $_SESSION['msg'] = "Data gagal disimpan";
-            }
+            getIdRegister();
 
-            $getId_regis = "SELECT * FROM register ORDER BY id_register DESC LIMIT 1";
-            $getId_regis = $conn->prepare($getId_regis);
-            $getId_regis->execute();
-            $ext = $getId_regis->fetch(PDO::FETCH_ASSOC);
-            $sql_insert2 = "INSERT INTO profil VALUES(NULL, :id_register, NULL, NULL, NULL, NULL, NULL)";
-            $stm3 = $conn->prepare($sql_insert2);
-            $stm3->bindValue(':id_register', $ext['id_register']);
-
-            if($stm3->execute()){
-                $_SESSION['msg'] = "Data berhasil disimpan";
-            } else {
-                $_SESSION['msg'] = "Data gagal disimpan";
-            }
+            addDataProfile();
 
         } else {
             $_SESSION['nama_lengkap'] = $nama_lengkap;

@@ -8,10 +8,12 @@ if (!isset($_SESSION['id_register'])){
 }
 
 $show_Allpostingan_following = showPostinganFollowing($_SESSION['id_register']); 
+
 $id_register = $_SESSION['id_register'];
 $sql = "SELECT * FROM view_profil WHERE id_register = $id_register";
 $stm = $conn->query($sql);
 $result = $stm->Fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 <!DOCTYPE html>
@@ -32,6 +34,7 @@ $result = $stm->Fetch(PDO::FETCH_ASSOC);
             echo '
                 <div class="center">
                     <div class="border">
+                        <div class="line"></div>
                         <div class="posting">    
                             <img src="data:image/jpeg;base64,'.base64_encode( $postingFollowing["gambar"] ).'" alt="foto">
                             <br>';

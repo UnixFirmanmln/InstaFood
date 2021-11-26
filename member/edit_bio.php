@@ -2,6 +2,7 @@
 
 session_start();
 include '../koneksi.php';
+include '../function/function.php';
 
 if (isset($_POST['submit'])) {
     $bio = $_POST['bio'];
@@ -15,16 +16,8 @@ if (isset($_POST['submit'])) {
 
         if ($valid) {
 
-            $sql_update_bio = "UPDATE profil SET bio = :bio WHERE id_register = :id_register";
-            $stm2 = $conn->prepare($sql_update_bio);
-            $stm2->bindValue(':id_register', $_SESSION['id_register']);
-            $stm2->bindValue(':bio', $_POST['bio']);
-            if($stm2->execute()){
-                $_SESSION['msg'] = "Data berhasil disimpan";
-            } else {
-                $_SESSION['msg'] = "Data gagal disimpan";
-            }            
-
+            updateBio($_SESSION['id_register'],$_POST['bio']);
+            
         } else {
             $_SESSION['bio'] = $bio;
         }

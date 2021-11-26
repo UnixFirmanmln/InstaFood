@@ -1,10 +1,7 @@
 <?php 
     include '../koneksi.php';
+    include '../function/function.php';
     session_start();
-    $cari =  $_GET['member'];
-    $query_search = "SELECT * FROM register WHERE username LIKE '%$cari%'";
-    $ext_search = $conn->prepare($query_search);
-    $ext_search->execute();
 
 ?>
 
@@ -19,9 +16,12 @@
 </head>
 <body>
     <?php include 'navbar.php' ?>
-    <h1>Ini Page Hasil Search</h1>
-    <?php foreach ($ext_search as $search) {
-        echo "<a href='profile.php?id=".$search['id_register']."'>".$search['username'].'</a>';
+    <h1>Hasil Search:</h1> 
+    <?php foreach (searchMember() as $search) {
+        echo "
+            <div class='containerhasil'>
+                <a href='profile.php?id=".$search['id_register']."'>".$search['username'].'</a>
+            </div>';
     } ?>
 </body>
 </html>

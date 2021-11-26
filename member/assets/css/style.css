@@ -10,7 +10,7 @@
 
 .popupbx
 {
-	margin: -9.5cm 0 0 -7.7cm;
+	margin: 0 0 0 -4cm;
 }
 
 .popup
@@ -158,7 +158,6 @@ header.sticky ul li a
 {
     flex-direction: column;
     background: whitesmoke;
-    border-radius: 15px;
 }
 
 .posting
@@ -198,4 +197,17 @@ header.sticky ul li a
     min-height: 1cm;
     background: white;
     width: 100%;
+}
+
+/* Data Member Hasil Search */
+.containerhasil
+{
+	display: flex;
+	flex-direction: column;
+	background: white;
+	border-radius: 10px;
+	width: 60%;
+	height: 2cm;
+	margin: 1cm 20% 1cm 20%;
+
 }

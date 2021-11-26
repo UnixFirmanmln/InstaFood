@@ -81,28 +81,31 @@ if (isset($_POST['submit'])) {
 <body>
     <?php include 'navbar.php'; ?>
     <?= isset($msg) ? $msg : '' ?>
-    <div class="center">
-        <form action="tambah_posting.php" method="POST" enctype="multipart/form-data">
-            <h3>Upload Image</h3>
-            <input type="file" name="gambar">
-            <br>
-            <br>
-            <br>
+    <div class="bgposting">
+        <div class="centerposting">
+            <form action="tambah_posting.php" method="POST" enctype="multipart/form-data">
+                <h3>Upload Image</h3>
+                <input type="file" name="gambar">
+                <br>
+                <br>
+                <br>
 
-            <h3>Pesan</h3>
-            <textarea name="pesan" placeholder="pesan . . ."></textarea>
+                <h3>Pesan</h3>
+                <textarea name="pesan" placeholder="pesan . . ."></textarea>
 
-            <div class="btn">
-                <div class="btn_back">
-                    <a href="profile.php"><h6>Kembali</h6></a>
+                <div class="btn">
+                    <div class="btn_back">
+                        <a href="profile.php"><h6>Kembali</h6></a>
+                    </div>
+                    <button type="submit" name="submit">Upload</button>
                 </div>
-                <button type="submit" name="submit">Upload</button>
-            </div>
-            
-            
-            
-        </form>
+                
+                
+                
+            </form>
+        </div>
     </div>
+    
     
 </body>
 </html>

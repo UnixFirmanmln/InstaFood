@@ -1,28 +1,22 @@
 <?php  
 session_start();
 include '../koneksi.php';
-// $id_register = $_SESSION['id_register'];
-// $sql = "SELECT * FROM register WHERE id_register = '$id_register'";
-// $stm = $conn->prepare($sql);
-// $stm->execute();
+include '../function/function.php';
 
 if (isset($_POST['submit'])) {
     $nama_lengkap = $_POST['nama_lengkap'];
     $umur = $_POST['umur'];
-    $jns_kel = $_POST['jns_kel'];
     $alamat = $_POST['alamat'];
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     
-    if($nama_lengkap != "" && $umur != "" && $jns_kel != "" && $alamat != "" && $email != "" && $username != "" && $password != "") {
+    if($nama_lengkap != "" && $umur != "" && $alamat != "" && $email != "" && $username != "" && $password != "") {
         $valid = TRUE;
         // !ctype_alnum = inp huruf angka
         // !ctype_alpha = inp huruf
         // !is_numeric = inp angka
         // !filter_var = email
-
-        $_SESSION['jns_kel'] = $jns_kel;
 
         if(!is_numeric($_POST['umur'])) {
             $_SESSION['err_umur'] = 'Inputan harus berupa angka';
@@ -44,60 +38,14 @@ if (isset($_POST['submit'])) {
             $valid = FALSE;
         }
 
-        $image = "";
-        if($_FILES["foto"]["size"] == 0){
-            $image = "";
-            $valid++;
-            $errimg = "";
-        } elseif( !getimagesize($_FILES["foto"]["tmp_name"]) ){
-            $errimg = "data yang diupload harus berupa gambar";
-        } else {
-            $image = file_get_contents($_FILES["foto"]["tmp_name"]);
-            $valid++;
-            $errimg = "";
-        }
-
         if ($valid) {
-            $sql_update_regis = "UPDATE register SET nama_lengkap = :nama_lengkap,
-            umur = :umur, jns_kel = :jns_kel, alamat = :alamat, email = :email, username = :username, 
-            password = SHA2(:password, 0) WHERE id_register = :id_register";
-            $stm2 = $conn->prepare($sql_update_regis);
-            $stm2->bindValue(':id_register', $_SESSION['id_register']);
-            $stm2->bindValue(':nama_lengkap', $_POST['nama_lengkap']);
-            $stm2->bindValue(':umur', $_POST['umur']);
-            $stm2->bindValue(':jns_kel', $_POST['jns_kel']);
-            $stm2->bindValue(':alamat', $_POST['alamat']);
-            $stm2->bindValue(':email', $_POST['email']);
-            $stm2->bindValue(':username', $_POST['username']);
-            $stm2->bindValue(':password', $_POST['password']);
-            if($stm2->execute()){
-                $_SESSION['msg'] = "Data berhasil disimpan";
-            } else {
-                $_SESSION['msg'] = "Data gagal disimpan";
-            }
-
-            $sql_update_profil = "UPDATE profil SET foto = :foto, notelp = :notelp, tempat_lahir = :tempat_lahir,
-            tanggal_lahir = :tanggal_lahir WHERE id_register = :id_register";
-            $stm3 = $conn->prepare($sql_update_profil);
-            $stm3->bindValue(':id_register', $_SESSION['id_register']);
-            $stm3->bindValue(':foto', $image);
-            $stm3->bindValue(':notelp', $_POST['notelp']);
-            $stm3->bindValue(':tempat_lahir', $_POST['tempat_lahir']);
-            $stm3->bindValue(':tanggal_lahir', $_POST['tanggal_lahir']);
-            // $stm3->bindValue(':bio', $_POST['bio']);
-            if($stm3->execute()){
-                $_SESSION['msg'] = "Data berhasil disimpan";
-            } else {
-                $_SESSION['msg'] = "Data gagal disimpan";
-            }
-
-
             
+            updateDataRegiser();
+            updateDataProfile();          
 
         } else {
             $_SESSION['nama_lengkap'] = $nama_lengkap;
             $_SESSION['umur'] = $umur;
-            $_SESSION['jns_kel'] = $jns_kel;
             $_SESSION['alamat'] = $alamat;
             $_SESSION['email'] = $email;
             $_SESSION['username'] = $username;

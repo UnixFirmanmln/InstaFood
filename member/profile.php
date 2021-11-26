@@ -9,29 +9,17 @@ if(!isset($_GET['id'])){
 } else {
     $id_register = $_GET['id'];
 
-    //untuk mengambil data
-    $query_get_follow = "SELECT * FROM followers WHERE id_register = ".$_SESSION['id_register']." AND id_followed = ".$id_register;
-    $ext_unfollow = $conn->prepare($query_get_follow);
-    $ext_unfollow->execute();
-
     //buat mengecek apakah sudah menemukan atau belum. Jika ditemukan maka sudah difollow jika belum maka sebaliknya
-    $save = $ext_unfollow->rowCount() > 0;
+    $save = getDataTblFollowers($id_register)->rowCount() > 0;
 
 }
 
-$sql = "SELECT * FROM view_profil WHERE id_register = $id_register";
-$stm = $conn->query($sql);
-$result = $stm->Fetch(PDO::FETCH_ASSOC);
+$result = getViewProfile($id_register);
 
 $default = "<img src='../assets/images/default.jpg'>";
 // var_dump($id_register); die
 $update_foto = '<img src="data:image/jpeg;base64,'.base64_encode( $result["foto"] ).
 '" alt="foto">';
-
-//untuk menampilkan postingan
-$sql_posting = "SELECT * FROM posting WHERE id_register = $id_register";
-$stm2 = $conn->prepare($sql_posting);
-$stm2->execute();
 
 //untuk menampung jumlah posting
 $jml_posting = showCountPosting($id_register);
@@ -90,8 +78,9 @@ $jml_following = showCountFollowing($id_register);
 
     <div class="center">
         <div class="border">
-            <?php foreach($stm2 as $posting) : 
+            <?php foreach(showPostinganMember($id_register) as $posting) : 
                 echo '
+                    <div class="line"></div>
                     <div class="posting">
                         <img src="data:image/jpeg;base64,'.base64_encode( $posting["gambar"] ).'" alt="Status">
                         <br>';
