@@ -15,7 +15,7 @@
 <body>
 	<!-- menyisipkan file navbar -->
 	<?php include 'navbar.php' ?>
-	<h1>Data Member & Admin</h1>
+	<h1>Data Member</h1>
 	
 	<!-- perulangan untuk menampikan postingan member -->
 	<?php foreach (searchMember('') as $search) {

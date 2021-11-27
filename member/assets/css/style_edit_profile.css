@@ -1,3 +1,8 @@
+::-webkit-scrollbar
+{
+  width: 0;
+}
+
 body {
   background: #7efff5;
   display: flex;
