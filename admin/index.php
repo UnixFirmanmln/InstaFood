@@ -1,26 +1,24 @@
 <?php 
-    include '../koneksi.php'; //menyisipkan file koneksi
-    include '../function/function.php'; //menyisipkan file function
-    session_start(); //memulai session
-
-?>
+	include '../koneksi.php'; //menyisipkan file koneksi
+	include '../function/function.php'; //menyisipkan file function
+	session_start(); //memulai session
+?> 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>Hasil Pencarian</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<title>Admin View</title>
 </head>
 <body>
-    <!-- menyisipkan file navbar -->
-    <?php include 'navbar.php' ?> 
-    <h1>Hasil Search:</h1> 
-   
-    <!-- perulangan untuk menampikan data member -->
-    <?php foreach (searchMember($_GET['member']) as $search) {
+	<!-- menyisipkan file navbar -->
+	<?php include 'navbar.php' ?>
+	<h1>Data Member & Admin</h1>
+	
+	<!-- perulangan untuk menampikan postingan member -->
+	<?php foreach (searchMember('') as $search) {
         //untuk menampung jumlah posting
         $jml_posting = showCountPosting($search['id_register']);
 
@@ -30,7 +28,6 @@
         //untuk menampung jumlah following/yang diikuti
         $jml_following = showCountFollowing($search['id_register']);
 
-        // menampilkan data member
         echo "
             <div class='containerhasil'>
                 <div class='search_item'>
@@ -49,7 +46,7 @@
                     
                         echo "
                             <div class='flex_usr_info'>
-                                <a href='profile.php?id=".$search['id_register']."' class='usr_search'>".$search['username'].'
+                                <a href='../member/profile.php?id=".$search['id_register']."' class='usr_search'>".$search['username'].'
                                 </a>';     
                             
                         echo '
@@ -60,6 +57,6 @@
                     </div>
                 </div>
             </div>'";
-    } ?> 
+    } ?>
 </body>
 </html>

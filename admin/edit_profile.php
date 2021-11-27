@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) { //proses submit
         <!-- form yang prosesnya mengarah ke edit_profile.php -->
         <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
            
-         <!-- sebagai pesan error -->
+        <!-- sebagai pesan error -->
             <?php 
                 if(isset($_SESSION['msg'])) {
                     echo "<p style='color:red;'>".$_SESSION['msg']."</p>";
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) { //proses submit
                 ?>
         </div>
         
-         <!-- input form nama lengkap-->
+        <!-- input form nama lengkap-->
         <div class="inp_form"><br>
             <label>Nama Lengkap</label>
             <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="<?php echo $_SESSION['nama_lengkap']; ?>">
@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) { //proses submit
                 ?>    
         </div>
 
-         <!-- input form umur  -->
+        <!-- input form umur  -->
         <div class="inp_form"><br>
             <label>Umur</label>
             <input type="text" name="umur" placeholder="Umur" value="<?php echo $_SESSION['umur']; ?>">
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) { //proses submit
                 ?>
         </div>
                             
-         <!-- input form alamat -->    
+         <!-- input form alamat -->             
         <div class="inp_form"><br>
             <label>Alamat</label>
             <input type="text" name="alamat" placeholder="Alamat" value="<?php echo $_SESSION['alamat']; ?>">
@@ -134,9 +134,10 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['err_alamat']);
                     }
                 ?> 
+            <span></span>
         </div>
-                
-         <!-- input form no telp-->
+
+        <!-- input form no telp-->
         <div class="inp_form"><br>
             <label>No Telepon</label>
             <input type="text" name="notelp" placeholder="No Telepon" value="<?php echo $_SESSION['notelp']; ?>">
@@ -145,10 +146,11 @@ if (isset($_POST['submit'])) { //proses submit
                         echo $_SESSION['Err_notelp'];
                         unset($_SESSION['Err_notelp']);
                     }
-                ?> 
+                ?>
+            <span></span>   
         </div>
 
-         <!-- input form  tempat lahir-->
+        <!-- input form  tempat lahir-->
         <div class="inp_form"><br>
             <label>Tempat Lahir</label>
             <input type="text" name="tempat_lahir" placeholder="Tempat Lahir" value="<?php echo $_SESSION['tempat_lahir']; ?>">
@@ -158,9 +160,10 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['Err_tempat_lahir']);
                     }
                 ?>
+            <span></span>
         </div>
 
-         <!-- input form tanggal lahir -->
+        <!-- input form tanggal lahir -->
         <div class="inp_form"><br>
             <label>Tanggal Lahir</label>
             <input type="date" name="tanggal_lahir" placeholder="Tanggal Lahir" value="<?php echo $_SESSION['tanggal_lahir']; ?>">
@@ -170,9 +173,10 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['Err_tanggal_lahir']);
                     }
                 ?>
+            <span></span>
         </div>
 
-         <!-- input form email -->
+        <!-- input form email -->
         <div class="inp_form"><br>
             <label>Email</label>
             <input type="text" name="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>">
@@ -182,6 +186,7 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['err_email']);
                     }
                 ?>
+            <span></span>
         </div>
 
          <!-- input form username -->
@@ -194,9 +199,10 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['err_username']);
                     }
                 ?>
+            <span></span>
         </div>
 
-         <!-- input form password -->
+        <!-- input form password -->
         <div class="inp_form"><br>
             <label>Password</label>
             <input type="password" name="password" placeholder="Password">
@@ -206,8 +212,9 @@ if (isset($_POST['submit'])) { //proses submit
                         unset($_SESSION['err_password']);
                     }
                 ?>
+            <span></span>
         </div>
-        
+                
         <!-- button simpan -->
         <button type="submit" name="submit">Simpan</button>
         <a href="profile.php">Kembali</a>

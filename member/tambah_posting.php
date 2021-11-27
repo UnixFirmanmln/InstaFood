@@ -1,15 +1,15 @@
 <?php  
-session_start();
+session_start(); //memulai session
 include '../koneksi.php';
 $sql = "SELECT * FROM posting";
 $stm = $conn->prepare($sql);
 $stm->execute();
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { //proses submit
    
     $pesan = $_POST['pesan'];
    
-    if($pesan != "") {
+    if($pesan != "") { //jika pesan tidak kosing
         $valid = TRUE;
         // !ctype_alnum = inp huruf angka
         // !ctype_alpha = inp huruf
@@ -30,8 +30,8 @@ if (isset($_POST['submit'])) {
             $errimg = "";
         }
 
-        if ($valid) {
-            
+        if ($valid) { //jika valid
+            //menambah data postingan     
             $sql_insert = "INSERT INTO posting(id_register, gambar, pesan) VALUES(:id_register, :gambar, :pesan)";
             $stm2 = $conn->prepare($sql_insert);
             $stm2->bindValue(':id_register', $_SESSION['id_register']);
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['pesan'] = $pesan;
         }
 
-    } else {
+    } else { //error message
         $_SESSION['msg'] = '<p style="color: red;">inputan tidak boleh kosong</p>';
     }            
 
@@ -79,10 +79,13 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <!-- menyisipkan file navbar -->
+    <?php include 'navbar.php'; ?> 
     <?= isset($msg) ? $msg : '' ?>
     <div class="bgposting">
         <div class="centerposting">
+
+            <!-- form yang prosesnya mengarah pada tambah_posting.php -->
             <form action="tambah_posting.php" method="POST" enctype="multipart/form-data">
                 <h3>Upload Image</h3>
                 <input type="file" name="gambar">
@@ -97,6 +100,8 @@ if (isset($_POST['submit'])) {
                     <div class="btn_back">
                         <a href="profile.php"><h6>Kembali</h6></a>
                     </div>
+
+                    <!-- button upload -->
                     <button type="submit" name="submit">Upload</button>
                 </div>
                 

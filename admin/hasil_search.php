@@ -16,11 +16,11 @@
 </head>
 <body>
     <!-- menyisipkan file navbar -->
-    <?php include 'navbar.php' ?> 
+    <?php include 'navbar.php' ?>
     <h1>Hasil Search:</h1> 
-   
-    <!-- perulangan untuk menampikan data member -->
-    <?php foreach (searchMember($_GET['member']) as $search) {
+
+    <!-- perulangan untuk menampikan data member dan admin -->
+    <?php foreach (searchAdmin($_GET['member']) as $search) {
         //untuk menampung jumlah posting
         $jml_posting = showCountPosting($search['id_register']);
 
@@ -30,7 +30,7 @@
         //untuk menampung jumlah following/yang diikuti
         $jml_following = showCountFollowing($search['id_register']);
 
-        // menampilkan data member
+        // menampilkan data member dan admin
         echo "
             <div class='containerhasil'>
                 <div class='search_item'>
@@ -49,7 +49,7 @@
                     
                         echo "
                             <div class='flex_usr_info'>
-                                <a href='profile.php?id=".$search['id_register']."' class='usr_search'>".$search['username'].'
+                                <a href='../member/profile.php?id=".$search['id_register']."' class='usr_search'>".$search['username'].'
                                 </a>';     
                             
                         echo '
@@ -60,6 +60,8 @@
                     </div>
                 </div>
             </div>'";
-    } ?> 
+    } ?>
+   
 </body>
 </html>
+

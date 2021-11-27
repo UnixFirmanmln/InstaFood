@@ -10,15 +10,12 @@
     </form>
     
     <ul>
-        <!-- menu home -->
-        <li><a href="index.php">Home</a></li> 
-
+        <!-- menu home admin -->
+        <li><a href="<?= $_SESSION["level"] == "admin" ? "../admin/index.php" : "index.php" ?>">Home</a></li>
+        
         <!-- menu posting -->
-        <li><a href="tambah_posting.php">Posting</a></li>
-
-        <!-- menu profil -->
         <li><a href="profile.php">Profil</a></li>
-
+        
         <!-- menu logout -->
         <li><a href="../logout.php">Logout</a></li>
     </ul>

@@ -1,6 +1,6 @@
 <?php 
 
-include '../koneksi.php';
+include '../koneksi.php'; //menyisipkan file koneksi
 
 //untuk mendapatkan semua data register
 function getRegister(){
@@ -17,6 +17,27 @@ function registerMember(){
     global $conn;
 
     $query_regis_member = "INSERT INTO register VALUES(NULL, :nama_lengkap, :umur, :jns_kel, :alamat, :email, :username, SHA2(:password, 0), 'member')";
+    $ext_query_regis_member = $conn->prepare($query_regis_member);
+    $ext_query_regis_member->bindValue(':nama_lengkap', $_POST['nama_lengkap']);
+    $ext_query_regis_member->bindValue(':umur', $_POST['umur']);
+    $ext_query_regis_member->bindValue(':jns_kel', $_POST['jns_kel']);
+    $ext_query_regis_member->bindValue(':alamat', $_POST['alamat']);
+    $ext_query_regis_member->bindValue(':email', $_POST['email']);
+    $ext_query_regis_member->bindValue(':username', $_POST['username']);
+    $ext_query_regis_member->bindValue(':password', $_POST['password']);
+
+    if($ext_query_regis_member->execute()){
+        $_SESSION['msg'] = "Data berhasil disimpan";
+    } else {
+        $_SESSION['msg'] = "Data gagal disimpan";
+    }
+}
+
+//untuk mendaftarkan Admin(register)
+function registerAdmin(){
+    global $conn;
+
+    $query_regis_member = "INSERT INTO register VALUES(NULL, :nama_lengkap, :umur, :jns_kel, :alamat, :email, :username, SHA2(:password, 0), 'admin')";
     $ext_query_regis_member = $conn->prepare($query_regis_member);
     $ext_query_regis_member->bindValue(':nama_lengkap', $_POST['nama_lengkap']);
     $ext_query_regis_member->bindValue(':umur', $_POST['umur']);
@@ -86,13 +107,16 @@ function showCountFollowing($id_register){
     return $ext_jml_following->fetch(PDO::FETCH_ASSOC);
 }
 
-//untuk menampilkan postingan yang di follow(diikuti)
-function showPostinganFollowing($id_register){
+//untuk menampilkan postingan yang di follow(diikuti) & menampilkan username dari member yang di follow
+function showUsernamePostinganFollowing($id_register){
     global $conn;
-    $query_postingan_following = "SELECT * FROM posting WHERE id_register IN (SELECT id_followed FROM followers WHERE id_register = $id_register)";
-    $ext_postingan_following = $conn->prepare($query_postingan_following);
-    $ext_postingan_following->execute();
-    return $ext_postingan_following;
+
+    $query_username_postingan_follow = "SELECT posting.*,register.username FROM posting INNER JOIN register 
+    ON posting.id_register = register.id_register WHERE posting.id_register 
+    IN (SELECT followers.id_followed FROM followers WHERE followers.id_register = $id_register)";
+    $ext_username_postingan_follow = $conn->prepare($query_username_postingan_follow);
+    $ext_username_postingan_follow->execute();
+    return $ext_username_postingan_follow;
 }
 
 //untuk memasukkan jumlah data yang di follow
@@ -178,15 +202,27 @@ function updateDataProfile(){
     }
 }
 
-//untuk Searching
-function searchMember(){
+//untuk Searching milik member
+function searchMember($cari){
     global $conn;
 
-    $cari =  $_GET['member'];
-    $query_search = "SELECT * FROM register WHERE username LIKE '%$cari%'";
+    $query_search = "SELECT profil.foto, register.* FROM profil INNER JOIN register
+    ON profil.id_register = register.id_register WHERE register.username LIKE '%$cari%' AND register.level = 'member'";
     $ext_search = $conn->prepare($query_search);
     $ext_search->execute();
     return $ext_search;
+}
+
+//untuk Searching milik admin
+function searchAdmin($cari){
+    global $conn;
+
+    $query_search = "SELECT profil.foto, register.* FROM profil INNER JOIN register
+    ON profil.id_register = register.id_register WHERE register.username LIKE '%$cari%'";
+    $ext_search = $conn->prepare($query_search);
+    $ext_search->execute();
+    return $ext_search;
+
 }
 
 //untuk mengambil data tbl followers dan untuk mngurangi jumlah pengkiut jika di unfollow
@@ -232,4 +268,6 @@ function showPostinganMember($id_register){
     $ext_postingan->execute();
     return $ext_postingan;
 }
+
+
 ?>

@@ -1,9 +1,9 @@
 <?php  
-session_start();
-include '../koneksi.php';
-include '../function/function.php';
+session_start(); //memulai session
+include '../koneksi.php'; //menyisipkan file koneksi
+include '../function/function.php'; //menyisipkan file function
 
-
+//proses submit
 if (isset($_POST['submit'])) {
     $nama_lengkap = $_POST['nama_lengkap'];
     $umur = $_POST['umur'];
@@ -12,6 +12,8 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['password'];
+
+    // jika data-data dari form input tidak kosong
     if($nama_lengkap != "" && $umur != "" && $jns_kel != "" && $alamat != "" && $email != "" && $username != "" && $password != "") {
         $valid = TRUE;
         // !ctype_alnum = inp huruf angka
@@ -21,32 +23,36 @@ if (isset($_POST['submit'])) {
 
         $_SESSION['jns_kel'] = $jns_kel;
 
+        //validasi
         if(!is_numeric($_POST['umur'])) {
-            $_SESSION['err_umur'] = 'Inputan harus berupa angka';
+            $_SESSION['err_umur'] = '<p style="color: red;">Inputan harus berupa angka</p>';
             $valid = FALSE;
         }
 
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['err_email'] = 'Inputan harus berupa email';
+            $_SESSION['err_email'] = '<p style="color: red;">Inputan harus berupa email</p>';
             $valid = FALSE;
         }
 
         if(!ctype_alnum($_POST['username'])) {
-            $_SESSION['err_username'] = 'inputan harus berupa huruf / angka';
+            $_SESSION['err_username'] = '<p style="color: red;">inputan harus berupa huruf / angka</p>';
             $valid = FALSE;
         } 
 
         if(strlen($_POST['password']) < 8) {
-            $_SESSION['err_password'] = 'Masukkan password minimal 8 karakter';
+            $_SESSION['err_password'] = '<p style="color: red;">Masukkan password minimal 8 karakter</p>';
             $valid = FALSE;
         }
 
-        if ($valid) {
+        if ($valid) { //jika data benar maka data akan di update
 
+            //update data dari table register level member
             registerMember();
 
+            //mengambil id register
             getIdRegister();
 
+            //update data dari tabel profil
             addDataProfile();
 
         } else {
@@ -59,7 +65,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['password'] = $password;
         }
 
-    } else {
+    } else { //pesan error
         $_SESSION['msg'] = '<p style="color: red;">inputan tidak boleh kosong</p>';
     }            
 
@@ -81,14 +87,18 @@ if (isset($_POST['submit'])) {
         <img src="">
         <h1>Registrasi</h1>
 
+        <!-- form yang prosesnya mengarah pada registrasi.php -->
         <form action="registrasi.php" method="POST">
            
+         <!-- sebagai pesan error -->
             <?php 
                 if(isset($_SESSION['msg'])) {
                     echo "<p style='color:red;'>".$_SESSION['msg']."</p>";
                     unset($_SESSION['msg']);
                 } 
             ?>
+
+        <!-- input form nama lengkap -->
         <div class="left">
             <div class="inp_form">
                 <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="<?php if(isset($_SESSION['nama_lengkap'])){echo $_SESSION['nama_lengkap']; unset($_SESSION['nama_lengkap']);} ?>">
@@ -102,7 +112,7 @@ if (isset($_POST['submit'])) {
                 <label>Nama Lengkap</label>
             </div>
 
-
+            <!-- input form umur-->
             <div class="inp_form">
                 <input type="text" name="umur" placeholder="Umur" value="<?php if(isset($_SESSION['umur'])){echo $_SESSION['umur']; unset($_SESSION['umur']);} ?>">
                     <?php
@@ -115,7 +125,7 @@ if (isset($_POST['submit'])) {
                 <label>Umur</label>
             </div>
                             
-
+            <!-- input form jenis kelamin-->
             <div class="inp_form">
                 <h4>Jenis kelamin</h4>                        
                 <input type="radio" name="jns_kel" value="pria" 
@@ -139,7 +149,7 @@ if (isset($_POST['submit'])) {
                 </div> 
             </div>
                                 
-                            
+            <!-- input form alamat-->
             <div class="inp_form">
                 <input type="text" name="alamat" placeholder="Alamat" value="<?php if(isset($_SESSION['alamat'])){echo $_SESSION['alamat']; unset($_SESSION['alamat']);} ?>">
                     <?php
@@ -153,6 +163,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
+        <!-- input form email-->
         <div class="right">
             <div class="inp_form">
                 <input type="text" name="email" placeholder="Email" value="<?php if(isset($_SESSION['email'])){echo $_SESSION['email']; unset($_SESSION['email']);} ?>">
@@ -166,7 +177,7 @@ if (isset($_POST['submit'])) {
                 <label>Email</label>
             </div>
 
-
+            <!-- input form username-->
             <div class="inp_form">
                 <input type="text" name="username" placeholder="Username" value="<?php if(isset($_SESSION['username'])){echo $_SESSION['username']; unset($_SESSION['username']);} ?>">
                     <?php
@@ -179,7 +190,7 @@ if (isset($_POST['submit'])) {
                 <label>Username</label>
             </div>
 
-
+            <!-- input form password-->
             <div class="inp_form">
                 <input type="password" name="password" placeholder="Password" value="<?php if(isset($_SESSION['password'])){echo $_SESSION['password']; unset($_SESSION['password']);} ?>">
                     <?php
@@ -192,10 +203,11 @@ if (isset($_POST['submit'])) {
                 <label>Password</label>
             </div>
         </div>
-                
+        
+        <!-- button submit -->
         <button type="submit" name="submit">Submit</button>
         <div class="login">
-            Sudah mempunyai Akun? <a href="../index.php">Login :)</a>
+            Sudah mempunyai Akun? <a href="../login.php">Login :)</a>
         </div>
                      
         </form>

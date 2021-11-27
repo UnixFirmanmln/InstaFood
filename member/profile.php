@@ -1,7 +1,7 @@
 <?php 
-session_start();
-include '../koneksi.php';
-include '../function/function.php';
+session_start(); //memulai session
+include '../koneksi.php'; //menyisipkan file koneksi
+include '../function/function.php'; //menyisipkan function
 
 if(!isset($_GET['id'])){
     $id_register = $_SESSION['id_register'];
@@ -9,15 +9,15 @@ if(!isset($_GET['id'])){
 } else {
     $id_register = $_GET['id'];
 
-    //buat mengecek apakah sudah menemukan atau belum. Jika ditemukan maka sudah difollow jika belum maka sebaliknya
-    $save = getDataTblFollowers($id_register)->rowCount() > 0;
-
 }
 
+// mendapatkan data dari view
 $result = getViewProfile($id_register);
 
+//foto profile default
 $default = "<img src='../assets/images/default.jpg'>";
-// var_dump($id_register); die
+
+//update foto baru
 $update_foto = '<img src="data:image/jpeg;base64,'.base64_encode( $result["foto"] ).
 '" alt="foto">';
 
@@ -43,41 +43,63 @@ $jml_following = showCountFollowing($id_register);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <?php include 'navbar.php' ?>
+
+    <!-- jika level member maka akan menyisipkan file navbar dan sebaliknya -->
+    <?php if ($_SESSION['level'] != 'admin') {
+        include 'navbar.php'; //member
+    }else{
+        include '../admin/navbar.php'; //admin
+    }    
+    ?>
 
     <div class='center'>
-
+        <!-- foto profile -->
         <div class='profile_img'>
+            <!-- jika foto belum di update maka foto akan default -->
             <?= $result['foto'] == NULL ? $default : $update_foto?>
         </div>
 
         <div class="formbx">
             <div class="username">
-                <?php echo $result['username'];?> <a href="edit_profile.php" class="<?= $id_register == $_SESSION['id_register']? '' : 'hide'?>">Edit Profil </a>
-                <?php if($save) : ?>
-                    <a href="unfollow.php?id_register=<?= $_SESSION['id_register'] ?>&id_followed=<?= $id_register ?>" class="<?= $id_register == $_SESSION['id_register']? 'hide' : ''?>"> Unfollow </a>
-                <?php else : ?> 
-                    <a href="follow.php?id_register=<?= $_SESSION['id_register'] ?>&id_followed=<?= $id_register ?>" class="<?= $id_register == $_SESSION['id_register']? 'hide' : ''?>">Follow</a>
-                <?php endif ?>
-            </div>
-                
-            <?= $jml_posting['jml_posting'] ?> kiriman
-            <?= $jml_follower['jml_follower'] ?> pengikut
-            <?= $jml_following['jml_following'] ?> diikuti
-            
-            
-            
-            <br><br>
+                <!-- echo username -->
+                <?php echo $result['username'];?> 
 
-            <div class="bio">
-                <?php echo $result['bio']; ?> <a href="edit_bio.php" class="<?= $id_register == $_SESSION['id_register']? '' : 'hide'?>">Edit Bio </a>
+                <!-- jika level member -->
+                <?php if ($_SESSION['level'] != 'admin') { ?>
+                    <a href="edit_profile.php" class="<?= $id_register == $_SESSION['id_register']? '' : 'hide'?>">Edit Profil </a>
+                    <?php
+                    //buat mengecek apakah sudah menemukan atau belum. Jika ditemukan maka sudah difollow jika belum maka sebaliknya
+                    $save = getDataTblFollowers($id_register)->rowCount() > 0;
+
+                    //jika level admin
+                    if($save) : ?>
+                        <a href="unfollow.php?id_register=<?= $_SESSION['id_register'] ?>&id_followed=<?= $id_register ?>" class="<?= $id_register == $_SESSION['id_register']? 'hide' : ''?>"> Unfollow </a>
+                        <?php else : ?> 
+                        <a href="follow.php?id_register=<?= $_SESSION['id_register'] ?>&id_followed=<?= $id_register ?>" class="<?= $id_register == $_SESSION['id_register']? 'hide' : ''?>">Follow</a>
+                        <?php endif ?>
+               <?php } ?>
+                    
             </div>
+            
+            <!-- menampilkan data-data dibawah ini -->
+            <?= $jml_posting['jml_posting'] ?> kiriman &nbsp;&nbsp;
+            <?= $jml_follower['jml_follower'] ?> pengikut &nbsp;&nbsp;
+            <?= $jml_following['jml_following'] ?> diikuti &nbsp;&nbsp;
+
+            <br><br>
+            <!-- edit bio member -->
+            <?php if ($_SESSION['level'] != 'admin') { ?>
+                <div class="bio">
+                    <?php echo $result['bio']; ?> <a href="edit_bio.php" class="<?= $id_register == $_SESSION['id_register']? '' : 'hide'?>">Edit Bio </a>
+                </div>
+            <?php } ?>
         </div>
              
     </div>
 
     <div class="center">
         <div class="border">
+            <!-- menampikan semua postingan member -->
             <?php foreach(showPostinganMember($id_register) as $posting) : 
                 echo '
                     <div class="line"></div>

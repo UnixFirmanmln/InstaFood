@@ -1,19 +1,17 @@
 <?php 
-include '../koneksi.php';
-include '../function/function.php';
+include '../koneksi.php'; //menyisipkan file koneksi
+include '../function/function.php'; //menyisipkan file function
 
-session_start();
+session_start(); //memulai session
+
+// kondisi jika ada session id_register maka akan dirahkan ke index member
 if (!isset($_SESSION['id_register'])){
     header('location: ../login.php');
 }
 
-$show_Allpostingan_following = showPostinganFollowing($_SESSION['id_register']); 
-
+//menampilkan semua posting yang difollow(diikuti)
 $id_register = $_SESSION['id_register'];
-$sql = "SELECT * FROM view_profil WHERE id_register = $id_register";
-$stm = $conn->query($sql);
-$result = $stm->Fetch(PDO::FETCH_ASSOC);
-
+$show_Allpostingan_following  = showUsernamePostinganFollowing($id_register);
 
 ?>
 <!DOCTYPE html>
@@ -28,8 +26,10 @@ $result = $stm->Fetch(PDO::FETCH_ASSOC);
     
 </head>
 <body>
-	<?php include 'navbar.php' ?>
+    <!-- menyisipkan file navbar -->
+	<?php include 'navbar.php' ?> 
 
+    <!-- perulangan untuk menampikan postingan member-->
     <?php foreach($show_Allpostingan_following AS $postingFollowing){
             echo '
                 <div class="center">
@@ -42,7 +42,7 @@ $result = $stm->Fetch(PDO::FETCH_ASSOC);
                             echo '
                                 <div class="containerbx">
                                     <div class="username_posting">'.
-                                        $result['username'].'
+                                        $postingFollowing['username'].'
                                     </div>
 
                                     <div class="tgl">'.

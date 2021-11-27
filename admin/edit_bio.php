@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) { //proses submit
         // !filter_var = email
 
         //update bio
-        if ($valid) { 
+        if ($valid) {
 
             updateBio($_SESSION['id_register'],$_POST['bio']);
             
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) { //proses submit
 </head>
 <body>
 
-    <!-- form yang prosesnya mengarah ke edit_bio.php -->
+<!-- form yang prosesnya mengarah ke edit_bio.php -->
     <form action="edit_bio.php" method="POST">
         <textarea name="bio" placeholder="Alamat . . ." cols="30" rows="10"></textarea>
         <?php 
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) { //proses submit
             }
         ?>
         <br>
-        
+
         <!-- submit data -->
         <button type="submit" name="submit">Update</button>
         <a href="profile.php">Kembali</a>

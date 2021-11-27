@@ -1,5 +1,5 @@
 body {
-  background: gray;
+  background: #7efff5;
   display: flex;
   align-items: center;
   height: 100%;
@@ -48,6 +48,7 @@ button {
   margin-right: 10px;
   border: none;
 }
+
 button:hover{
   opacity: .7;
 }
@@ -69,9 +70,9 @@ button:hover{
    margin: 20px auto;
 }
 
-h1 {
+.center h1 {
   text-align: center;
-  color: #fff;
+  color: black;
 }
 
 .ca {
